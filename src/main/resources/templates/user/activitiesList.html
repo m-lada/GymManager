@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Zajęcia</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../../static/css/main_styles.css"
+          th:href="@{../../static/css/main_styles.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"></script>
+
+    <style type="text/css">
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            margin: auto;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .headerStyle {
+            padding: 50px;
+            max-width: 1000px;
+            width: 100%;
+            margin: auto;
+            display: flex;
+            background: #cccccc;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .headerButtons {
+            padding: 20px;
+            max-width: 1000px;
+            width: 100%;
+            margin: auto;
+            display: flex;
+            justify-content: space-around;
+            flex-direction: row;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            background-image: url("https://image.freepik.com/free-vector/anger-pig-logo_43623-291.jpg");
+            background-color: #cccccc;
+            background-blend-mode: lighten;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container" th:replace="fragments :: header-accountButtons-personalized"/>
+<div class="headerStyle" th:replace="fragments :: header"/>
+<div class="headerStyle" th:replace="fragments :: header-buttons-menu"/>
+
+<div class="container">
+
+    <form class="row g-2" action="/admin/activities" method="get">
+        <div class="col-md-4">
+            <label style="display: flex; margin: auto; padding: 2px; font-size: 20px; font-weight: bold">
+                Filtruj zajęcia po kryterium</label>
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" name="searchingTitle" th:value="${searchingTitle}">
+        </div>
+        <div class="col-md-3">
+            <input type="date" class="form-control" name="searchingDate" th:value="${searchingDate}">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary btn-m">Wyszukaj</button>
+        </div>
+    </form>
+
+    <h3>Wszystkie zajęcia na siłowni:</h3>
+
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>Nazwa zajęć</th>
+            <th>Dzień</th>
+            <th>Godzina</th>
+            <th>Sala</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="activity: ${activities}">
+            <td th:text="${activity.title}"></td>
+            <td th:text="${#temporals.format(activity.term, 'dd-MM-yyyy')}"></td>
+            <td th:text="${#temporals.format(activity.term, 'HH:mm')}"></td>
+            <td th:text="${activity.hallName}"></td>
+            <td>
+                <a th:href="|/activities/${activity.id}/join|" class="btn btn-secondary" role="button"
+                   aria-pressed="true">Dołącz</a>
+            </td>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

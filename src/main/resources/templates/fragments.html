@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Exodus - ćwicz i kwicz</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/main_styles.css"
+          th:href="@{../static/css/main_styles.css}">
+    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"-->
+    <!--          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"></script>
+
+    <!--    <style type="text/css">-->
+    <!--        .container {-->
+    <!--            max-width: 1000px;-->
+    <!--            width: 100%;-->
+    <!--            margin: auto;-->
+
+    <!--        }-->
+
+    <!--        .headerStyle {-->
+    <!--            padding: 50px;-->
+    <!--            max-width: 1000px;-->
+    <!--            width: 100%;-->
+    <!--            margin: auto;-->
+    <!--            display: flex;-->
+    <!--            background: #cccccc;-->
+    <!--            background: rgba(0, 0, 0, 0.5);-->
+    <!--        }-->
+
+    <!--        .headerButtons {-->
+    <!--            padding: 20px;-->
+    <!--            max-width: 1000px;-->
+    <!--            width: 100%;-->
+    <!--            margin: auto;-->
+    <!--            display: flex;-->
+    <!--            justify-content: space-around;-->
+    <!--            flex-direction: row;-->
+    <!--            background: rgba(0, 0, 0, 0.5);-->
+    <!--        }-->
+
+    <!--        body {-->
+    <!--            background-image: url("https://image.freepik.com/free-vector/anger-pig-logo_43623-291.jpg");-->
+    <!--            background-color: #cccccc;-->
+    <!--            background-blend-mode: lighten;-->
+    <!--            background-repeat: no-repeat;-->
+    <!--            background-attachment: fixed;-->
+    <!--            background-size: cover;-->
+    <!--        }-->
+    <!--    </style>-->
+
+</head>
+<body>
+
+<div th:fragment="header" class="headerStyle">
+    <div>
+        <h1 style="font-style: oblique; font-family: monospace; font-size: 70px; font-weight: bold">siłownia
+            WILDPIG</h1>
+        <h3 style="margin-left: 200px; font-style: oblique; font-family: monospace; font-size: 40px; font-weight: bold">
+            'ćwicz i kwicz'</h3>
+    </div>
+</div>
+
+<div th:fragment="header-buttons-menu-admin" class="headerButtons">
+    <a href="/admin/activities" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Zobacz wszystkie
+        zajęcia</a>
+    <a href="/admin/activities/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Dodaj nowe
+        wydarzenie</a>
+    <a href="/admin/users" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Lista
+        użytkowników</a>
+</div>
+
+<div th:fragment="header-buttons-menu-user" class="headerButtons">
+    <a href="/activities" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Zobacz wszystkie
+        zajęcia</a>
+</div>
+
+<div th:fragment="header-buttons-menu">
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <div th:replace="fragments :: header-buttons-menu-admin"/>
+    </div>
+    <div sec:authorize="hasRole('ROLE_USER')">
+        <div th:replace="fragments :: header-buttons-menu-user"/>
+    </div>
+</div>
+
+<div th:fragment="header-accountButtons-withoutLoginUser" class="headerButtons"
+     style="display: flex; justify-content: flex-end">
+    <a href="/register" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Zarejestruj</a>
+    <a href="/login" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Zaloguj</a>
+</div>
+
+<div th:fragment="header-accountButtons-forLoginUser" class="headerButtons"
+     style="display: flex; justify-content: flex-end; align-items: center">
+    <div style="align-items: center" sec:authorize="hasRole('ROLE_ADMIN')">
+        <p style="font-weight: bolder; padding: 10px; margin: 5px">Posiadasz uprawnienia administratora!</p>
+    </div>
+    <h5 style="padding: 10px">Zalogowany jako: </h5>
+    <h4 style="padding: 10px; font-weight: bolder" sec:authentication="name"></h4>
+    <a href="/edit-user" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Edytuj</a>
+    <a href="/logout" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Wyloguj się</a>
+</div>
+
+<div th:fragment="header-accountButtons-personalized">
+    <div sec:authorize="isAuthenticated()">
+        <div th:replace="fragments :: header-accountButtons-forLoginUser"/>
+    </div>
+    <div sec:authorize="!isAuthenticated()">
+        <div th:replace="fragments :: header-accountButtons-withoutLoginUser"/>
+    </div>
+</div>
+
+</body>
+</html>

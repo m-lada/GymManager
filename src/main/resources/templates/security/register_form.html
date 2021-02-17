@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Exodus - ćwicz i kwicz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main_styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"></script>
+
+    <style type="text/css">
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            margin: auto;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        p{
+            color: brown;
+            font-size: 15px;
+        }
+
+        .headerStyle {
+            padding: 50px;
+            max-width: 1000px;
+            width: 100%;
+            margin: auto;
+            display: flex;
+            background: #cccccc;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .headerButtons {
+            padding: 20px;
+            max-width: 1000px;
+            width: 100%;
+            margin: auto;
+            display: flex;
+            justify-content: space-around;
+            flex-direction: row;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            background-image: url("https://image.freepik.com/free-vector/anger-pig-logo_43623-291.jpg");
+            background-color: #cccccc;
+            background-blend-mode: lighten;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container" th:replace="fragments :: header"/>
+<div class="container" style="display: flex; flex-direction: row; padding: 50px; justify-content: center">
+    <div>
+        <a href="/" class="btn btn-light" role="button" aria-pressed="true" style="margin-bottom: 20px">Powrót do strony
+            głównej</a>
+
+        <h3>Zarejestruj się:</h3>
+
+        <p th:if="${showErrorMessage}">
+            Niepoprawna rejestracja!
+            <br>
+            Spróbuj ponownie
+        </p>
+
+        <form method="post" th:action="@{/register}" th:object="${user}">
+
+            <div class="mb-3 row">
+                <label for="firstName" class="col-sm-3 col-form-label">Imię</label>
+                <div class="col-sm-9">
+                    <input th:field="*{firstName}" type="text" class="form-control" id="firstName">
+                    <p th:errors="*{firstName}">FirstName Errors</p>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="lastName" class="col-sm-3 col-form-label">Nazwisko</label>
+                <div class="col-sm-9">
+                    <input th:field="*{lastName}" type="text" class="form-control" id="lastName">
+                    <p th:errors="*{lastName}">LastName Errors</p>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="adress" class="col-sm-3 col-form-label">Adres</label>
+                <div class="col-sm-9">
+                    <input th:field="*{adress}" type="text" class="form-control" id="adress">
+                    <p th:errors="*{adress}">Adress Errors</p>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="postalCode" class="col-sm-3 col-form-label">Kod pocztowy</label>
+                <div class="col-sm-9">
+                    <input th:field="*{postalCode}" type="text" class="form-control" id="postalCode">
+                    <p th:errors="*{postalCode}">Postal Code Errors</p>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="city" class="col-sm-3 col-form-label">Miasto</label>
+                <div class="col-sm-9">
+                    <input th:field="*{city}" type="text" class="form-control" id="city">
+                    <p th:errors="*{city}">City Errors</p>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-3 col-form-label">Email</label>
+                <div class="col-sm-9">
+                    <input th:field="*{userName}" type="email" class="form-control" id="staticEmail"
+                    placeholder="email@poczta.com">
+                    <p th:errors="*{userName}">Email errors</p>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-3 col-form-label">Hasło</label>
+                <div class="col-sm-9">
+                    <input th:field="*{password}" type="password" class="form-control" id="inputPassword">
+                    <p th:errors="*{password}">Password errors</p>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 col-14 mx-auto">
+                <input type="submit" class="btn btn-danger btn-lg" value="Zarejestruj"></button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

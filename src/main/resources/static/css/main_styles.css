@@ -1,0 +1,36 @@
+.container {
+    max-width: 1000px;
+    width: 100%;
+    margin: auto;
+    background: rgba(0,0,0,0.3);
+}
+
+.headerStyle {
+    padding: 50px;
+    max-width: 1000px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    background: #cccccc;
+    background: rgba(0,0,0,0.5);
+}
+
+.headerButtons {
+    padding: 20px;
+    max-width: 1000px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    background: rgba(0,0,0,0.5);
+}
+
+body {
+    background-image: url("background_wildpig.jpg");
+    background-color: #cccccc;
+    background-blend-mode: lighten;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
